@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+    <style>
+        body {
+            background: url({% static "images/bg.png" %}) no-repeat;
+            background-size: 100% auto;
+        }
+
+        #register_box {
+            width: 20%;
+            height: 400px;
+            background-color: #00000060;
+            margin: 10% auto auto;
+            text-align: center;
+            border-radius: 10px;
+            padding: 50px 50px;
+        }
+
+        #register_box input,
+        #register_box button {
+            outline: none;
+        }
+
+        #register_box h2 {
+            color: #ffffff90;
+            margin-top: 5%;
+        }
+
+        #register_box #form #input_box {
+            margin-top: 5%;
+        }
+
+        #register_box #form #input_box input {
+            border: 0;
+            width: 60%;
+            font-size: 15px;
+            color: #ffffff;
+            background: #ffffff00;
+            border-bottom: 2px solid #ffffff;
+            padding: 5px 10px;
+            margin-top: 10px;
+        }
+
+        #register_box button {
+            margin-top: 10px;
+            width: 40%;
+            height: 20px;
+            border-radius: 10px;
+            border: 0;
+            color: #fff;
+            font-size: 15px;
+            background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+            cursor: pointer;
+        }
+
+        #register_box #sign_up {
+            margin-top: 45%;
+        }
+
+        #register_box #sign_up a {
+            color: #b94648;
+        }
+    </style>
+</head>
+<body>
+    <div id="register_box">
+        <h2>注册</h2>
+            <div id="form">
+                <form name="register" method="post" onsubmit="return checkpwd()" action="{% url 'rindex' %}">
+                {% csrf_token %}
+                    <div id="input_box">
+                        <input type="text" name="name" placeholder="用户名"><br>
+                    </div>
+                    <div id="input_box">
+                        <input type="email" name="email" placeholder="邮箱"><br>
+                    </div>
+                    <div id="input_box">
+                        <input type="password" name="pwd" placeholder="密码"><br>
+                    </div>
+                    <div id="input_box">
+                        <input type="password" name="re_pwd" placeholder="确认密码"><br>
+                    </div>
+                    <button id="sure_register" type="submit" >确认注册</button>
+                </form>
+                    <button id="backtologin" type="submit" onclick="window.location='../login'" >返回登录</button><br>
+                            <button id="retomainpage" type="submit" onclick="window.location='../'" >返回主页</button>
+
+            </div>
+    </div>
+
+{% if messages %}
+<script>
+        {% for msg in messages %}
+            confirm('{{ msg.message }}');
+        {% endfor %}
+    </script>
+{% endif %}
+</body>
+<script>
+    function checkpwd() {
+        let pwd=document.forms["register"]["pwd"].value;
+        let re_pwd=document.forms["register"]["re_pwd"].value;
+        if (pwd!==re_pwd){
+            alert("密码不一致");
+            return false;
+        }
+    }
+</script>
+</html>
